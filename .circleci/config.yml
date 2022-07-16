@@ -45,7 +45,7 @@ commands:
             
 jobs:
   build-frontend:
-    nodedockerimg
+    executor: nodedockerimg
     steps:
       - checkout
       - restore_cache:
@@ -62,7 +62,7 @@ jobs:
           key: frontend-build
 
   build-backend:
-    nodedockerimg
+    executor: nodedockerimg
     steps:
       - checkout
       - restore_cache:
@@ -79,35 +79,35 @@ jobs:
           key: backend-build
 
   test-frontend:
-    nodedockerimg
+    executor: nodedockerimg
     steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
                 
   test-backend:
-    nodedockerimg
+    executor: nodedockerimg
     steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
             
   scan-frontend:
-    nodedockerimg
+    executor: nodedockerimg
     steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
 
   scan-backend:
-    nodedockerimg
+    executor: nodedockerimg
     steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
 
   deploy-infrastructure:
-    awsdockerimg
+    executor: awsdockerimg
     steps:
       # Checkout code from git
       - run:
@@ -140,7 +140,7 @@ jobs:
       # Here's where you will add some code to rollback on failure      
 
   configure-infrastructure:
-    ansibledockerimg
+    executor: ansibledockerimg
     steps:
       # Checkout code from git
       # Add ssh keys with fingerprint
@@ -158,7 +158,7 @@ jobs:
       # Here's where you will add some code to rollback on failure      
 
   run-migrations:
-    nodedockerimg
+    executor: nodedockerimg
     steps:
       # Checkout code from git
       - run:
@@ -174,7 +174,7 @@ jobs:
      # Here's where you will add some code to rollback on failure      
 
   deploy-frontend:
-    awsdockerimg
+    executor: awsdockerimg
     steps:
       # Checkout code from git
       - run:
@@ -194,7 +194,7 @@ jobs:
       # Here's where you will add some code to rollback on failure      
                     
   deploy-backend:
-    ansibledockerimg
+    executor: ansibledockerimg
     steps:
       # Checkout code from git
       # Add ssh keys with fingerprint
@@ -210,7 +210,7 @@ jobs:
       # Here's where you will add some code to rollback on failure  
 
   smoke-test:
-    ansibledockerimg
+    executor: ansibledockerimg
     steps:
       # Checkout code from git
       - run:
@@ -232,7 +232,7 @@ jobs:
       # Here's where you will add some code to rollback on failure  
 
   cloudfront-update:
-    awsdockerimg
+    executor: awsdockerimg
     steps:
       # Checkout code from git
       - run:
@@ -246,7 +246,7 @@ jobs:
       # Here's where you will add some code to rollback on failure  
 
 cleanup:
-    nodedockerimg
+    executor: nodedockerimg
     steps:
       # Checkout code from git
       - run:
