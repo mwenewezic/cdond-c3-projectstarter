@@ -144,27 +144,27 @@ jobs:
             # If the "npm audit fix" command above could not fix all critical vulnerabilities, try “npm audit fix --force” again
             npm audit --audit-level=critical
     
-  notify:
-    docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - slack/notify:
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "*This is a text notification*",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
-          event: always
+  # notify:
+  #   docker:
+  #     - image: 'cimg/base:stable'
+  #   steps:
+  #     - slack/notify:
+  #         custom: |
+  #           {
+  #             "blocks": [
+  #               {
+  #                 "type": "section",
+  #                 "fields": [
+  #                   {
+  #                     "type": "plain_text",
+  #                     "text": "*This is a text notification*",
+  #                     "emoji": true
+  #                   }
+  #                 ]
+  #               }
+  #             ]
+  #           }
+  #         event: always
             
 
 #   deploy-infrastructure:
@@ -366,7 +366,7 @@ workflows:
       # - cleanup:
       #     requires: [cloudfront-update]
 
-      send-notification:
-        jobs:
-          - notify:
-              context: slack-secrets
+      # send-notification:
+      #   jobs:
+      #     - notify:
+      #         context: slack-secrets
