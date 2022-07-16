@@ -1,15 +1,15 @@
 version: 2.1
 
-executors:
-  nodedockerimg:
-    docker:
-      - image: circleci/node:13.8.0
-  ansibledockerimg:
-    docker:
-      - image: python:3.9.0-alpine
-  awsdockerimg:
-    docker:
-      - image: amazon/aws-cli
+# executors:
+#   nodedockerimg:
+#     docker:
+#       - image: circleci/node:13.8.0
+#   ansibledockerimg:
+#     docker:
+#       - image: python:3.9.0-alpine
+#   awsdockerimg:
+#     docker:
+#       - image: amazon/aws-cli
 
 commands:
   destroy-environment:
@@ -63,7 +63,8 @@ jobs:
           key: frontend-build
 
   build-backend:
-    executor: nodedockerimg
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -80,35 +81,40 @@ jobs:
           key: backend-build
 
   test-frontend:
-    executor: nodedockerimg
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
                 
   test-backend:
-    executor: nodedockerimg
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
             
   scan-frontend:
-    executor: nodedockerimg
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
 
   scan-backend:
-    executor: nodedockerimg
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       # Checkout code from git
       # Restore from cache
       # Your job code here
 
   deploy-infrastructure:
-    executor: awsdockerimg
+    docker:
+      - image: amazon/aws-cli
     steps:
       # Checkout code from git
       - run:
@@ -141,7 +147,8 @@ jobs:
       # Here's where you will add some code to rollback on failure      
 
   configure-infrastructure:
-    executor: ansibledockerimg
+    docker:
+      - image: python:3.9.0-alpine
     steps:
       # Checkout code from git
       # Add ssh keys with fingerprint
@@ -159,7 +166,8 @@ jobs:
       # Here's where you will add some code to rollback on failure      
 
   run-migrations:
-    executor: nodedockerimg
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       # Checkout code from git
       - run:
@@ -175,7 +183,8 @@ jobs:
      # Here's where you will add some code to rollback on failure      
 
   deploy-frontend:
-    executor: awsdockerimg
+    docker:
+      - image: amazon/aws-cli
     steps:
       # Checkout code from git
       - run:
@@ -195,7 +204,8 @@ jobs:
       # Here's where you will add some code to rollback on failure      
                     
   deploy-backend:
-    executor: ansibledockerimg
+    docker:
+      - image: python:3.9.0-alpine
     steps:
       # Checkout code from git
       # Add ssh keys with fingerprint
@@ -211,7 +221,8 @@ jobs:
       # Here's where you will add some code to rollback on failure  
 
   smoke-test:
-    executor: ansibledockerimg
+    docker:
+      - image: python:3.9.0-alpine
     steps:
       # Checkout code from git
       - run:
@@ -233,7 +244,8 @@ jobs:
       # Here's where you will add some code to rollback on failure  
 
   cloudfront-update:
-    executor: awsdockerimg
+    docker:
+      - image: amazon/aws-cli
     steps:
       # Checkout code from git
       - run:
@@ -247,7 +259,8 @@ jobs:
       # Here's where you will add some code to rollback on failure  
 
 cleanup:
-    executor: nodedockerimg
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       # Checkout code from git
       - run:
