@@ -1,10 +1,5 @@
 version: 2.1
 
-executors:
-  dockerimg:
-    docker:
-      - image: circleci/node:13.8.0
-
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -39,7 +34,8 @@ commands:
             
 jobs:
   build-frontend:
-    executor: dockerimg
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -47,13 +43,17 @@ jobs:
       - run:
           name: Build front-end
           command: |
-            "echo Hello"
+            cd frontend
+            npm install
+            npm run build
+            exit 1
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
 
   build-backend:
-    executor: dockerimg
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -61,12 +61,15 @@ jobs:
       - run:
           name: Back-end build
           command: |
-            "echo World"
+              cd backend
+              npm install
+              npm run build
+              exit 1
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
 
-test-frontend:
+  test-frontend:
     docker:
       # Docker image here
     steps:
@@ -232,6 +235,7 @@ test-frontend:
   cloudfront-update:
     docker:
       # Docker image here that supports AWS CLI
+      - image: circleci/node:13.8.0
     steps:
       # Checkout code from git
       - run:
@@ -269,30 +273,30 @@ workflows:
     jobs:
       - build-frontend
       - build-backend
-      # - test-frontend:
-      #     requires: [build-frontend]
-      # - test-backend:
-      #     requires: [build-backend]
-      # - scan-backend:
-      #     requires: [build-backend]
-      # - scan-frontend:
-      #     requires: [build-frontend]
-      # - deploy-infrastructure:
-      #     requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      #     filters:
-      #       branches:
-      #         only: [test-feature-branch]
-      # - configure-infrastructure:
-      #     requires: [deploy-infrastructure]
-      # - run-migrations:
-      #     requires: [configure-infrastructure]
-      # - deploy-frontend:
-      #     requires: [run-migrations]
-      # - deploy-backend:
-      #     requires: [run-migrations]
-      # - smoke-test:
-      #     requires: [deploy-backend, deploy-frontend]
-      # - cloudfront-update:
-      #     requires: [smoke-test]
-      # - cleanup:
-      #     requires: [cloudfront-update]
+      - test-frontend:
+          requires: [build-frontend]
+      - test-backend:
+          requires: [build-backend]
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
+      - deploy-infrastructure:
+          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          filters:
+            branches:
+              only: [test-feature-branch]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
+          requires: [run-migrations]
+      - smoke-test:
+          requires: [deploy-backend, deploy-frontend]
+      - cloudfront-update:
+          requires: [smoke-test]
+      - cleanup:
+          requires: [cloudfront-update]
