@@ -3,17 +3,6 @@ version: 2.1
 orbs: 
   slack: circleci/slack@4.10.1
 
-# executors:
-#   nodedockerimg:
-#     docker:
-#       - image: circleci/node:13.8.0
-#   ansibledockerimg:
-#     docker:
-#       - image: python:3.9.0-alpine
-#   awsdockerimg:
-#     docker:
-#       - image: amazon/aws-cli
-
 commands:
   destroy_environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -213,7 +202,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yum install -y tar gzip ansible awscli
+            apk add --update tar 
+            apk add --update gzip 
+            apk add --update ansible 
+            apk add --update awscli
       - run:
           name: Configure server
           command: |
