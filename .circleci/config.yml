@@ -168,10 +168,11 @@ jobs:
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-            aws ec2 describe-instances \
+            BACKEND_IP=$(aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --output text >> inventory
+              --output text)
+            echo BACKEND_IP
             cat inventory
       - persist_to_workspace:
           root: ~/
@@ -333,12 +334,9 @@ jobs:
       - run:
           name: Frontend smoke test.
           command: |
-            export FRONTEND_IP=$(aws ec2 describe-instances \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:project,Values=udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --output text)
-            export FRONTEND_URL="http://${FRONTEND_IP}:3030"
-            if curl -s --head ${FRONTEND_URL} 
+            URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"            
+            echo ${URL} 
+            if curl -s ${URL} | grep "Welcome"
             then
               return 0
             else
