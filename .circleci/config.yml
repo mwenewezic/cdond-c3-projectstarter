@@ -34,8 +34,8 @@ commands:
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --filters "Name=tag:project,Values=udapeople-frontend-<< parameters.id >>" \
               --output text)
-            echo SUCCESS:$SUCCESS
-            if(( $SUCCESS==1 )); 
+            echo $SUCCESS
+            if(( $SUCCESS == 1 )); 
             then
               pwd
               ls -la
