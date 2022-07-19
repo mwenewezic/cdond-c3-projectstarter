@@ -32,7 +32,7 @@ commands:
           command: |
             #kvdb.io GET URL code goes here
             # Example: kvdb.io
-            SUCCESS=$(curl --insecure  https://kvdb.io/DDYLKd4KoGnsyCSh76nFFY/migration_<< parameters.workflow_id >>)
+            SUCCESS=$(curl --insecure  https://kvdb.io/DDYLKd4KoGnsyCSh76nFFY/migration_<< parameters.id >>)
             # Logic for reverting the database state
             if (( $SUCCESS == 1 ));
             then
