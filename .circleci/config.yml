@@ -177,10 +177,10 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # - destroy-environment:
-      #     id: ${CUSTOM_WORKFLOW_ID}  
-      # - revert-migrations:
-      #     id: ${CUSTOM_WORKFLOW_ID}   
+      - destroy-environment:
+          id: ${CUSTOM_WORKFLOW_ID}  
+      - revert-migrations:
+          id: ${CUSTOM_WORKFLOW_ID}   
 
   configure-infrastructure:
     docker:
