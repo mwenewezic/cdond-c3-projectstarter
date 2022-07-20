@@ -160,6 +160,7 @@ jobs:
       - run:
           name: Ensure front-end infrastructure exist
           command: |
+            echo $CUSTOM_WORKFLOW_ID
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
               --stack-name "udapeople-frontend-${CUSTOM_WORKFLOW_ID}" \
