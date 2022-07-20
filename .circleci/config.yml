@@ -433,14 +433,8 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend:
-          filters:
-              branches:
-                only: [dev-branch]
-      - build-backend:
-          filters:
-              branches:
-                only: [dev-branch]
+      - build-frontend
+      - build-backend
       - test-frontend:
           requires: [build-frontend]
           filters:
