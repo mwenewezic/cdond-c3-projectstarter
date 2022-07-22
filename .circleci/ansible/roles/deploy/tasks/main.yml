@@ -14,7 +14,7 @@
       pm2 stop default
       pm2 start -f ./main.js
     args:
-      chdir: /home/ubuntu/uda_app
+      chdir: /home/ubuntu
     environment:
       ENVIRONMENT: production
       TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
