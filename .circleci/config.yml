@@ -282,7 +282,7 @@ jobs:
             apk add --update ansible curl rsync openssh nodejs npm
             apk add --update ansible
             pip install awscli
-            npm install pm2 -g && pm2 update
+            npm install pm2 -g
       - run:
           name: Deploy backend
           command: |
