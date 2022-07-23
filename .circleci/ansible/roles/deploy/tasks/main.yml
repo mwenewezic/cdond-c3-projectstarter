@@ -4,7 +4,7 @@
   - name: "copy artifact to ec2"
     become: yes
     synchronize:
-      src: ~/project/artifact.tar.gz
+      src: ~/
       dest: /home/ubuntu
       recursive: true
   - name: "extract artifact"
@@ -37,14 +37,9 @@
       state: present
   - name: "start server"
     become: true
-    command: |
-      pwd
-      ls
-      npm install
-      pm2 stop default
-      pm2 start npm -- start
+    command: pm2 start -f ./main.js
     args:
-      chdir: /home/ubuntu
+      chdir: /home/ubuntu/dist
     environment:
       ENVIRONMENT: production
       TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
