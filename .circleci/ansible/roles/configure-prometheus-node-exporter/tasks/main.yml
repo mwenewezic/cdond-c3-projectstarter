@@ -9,21 +9,24 @@
 - name: "add node exporter configuration."
   command: |
     cd /etc/systemd/system
-    touch node-exporter.service
-    {
+    sudo touch node-exporter.service
+  
+    sudo cat > node-exporter.service << EOF
     [Unit]
-    Description=Node Exporter
-    Wants=network-online.target
-    After=network-online.target
+    Description=Prometheus Node Exporter Service
+    After=network.target
 
     [Service]
-    User=root
+    User=node_exporter
+    Group=node_exporter
     Type=simple
     ExecStart=/usr/local/bin/node_exporter
 
     [Install]
     WantedBy=multi-user.target
-    } >> node-exporter.service
+    EOF
+
+    
     
 
 - name: "enable node_exporter service"
