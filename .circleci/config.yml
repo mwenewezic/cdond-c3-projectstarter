@@ -337,8 +337,6 @@ jobs:
             echo "${API_URL}"
             if curl "${API_URL}/api/status" | grep "ok"
             then
-              echo "logs----"
-              sudo pm2 logs
               return 0
             else
               return 1
@@ -355,10 +353,10 @@ jobs:
             else
               return 1
             fi
-      - destroy-environment:
-          id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - revert-migrations:
-          id: ${CIRCLE_WORKFLOW_ID:0:7}
+      # - destroy-environment:
+      #     id: ${CIRCLE_WORKFLOW_ID:0:7}
+      # - revert-migrations:
+      #     id: ${CIRCLE_WORKFLOW_ID:0:7}
 
   cloudfront-update:
     docker:
