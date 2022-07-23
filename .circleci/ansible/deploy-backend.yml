@@ -17,9 +17,6 @@
       raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3)
       changed_when: false
   environment:
-    - NODE_ENV: "{{ lookup('env', 'NODE_ENV')}}"
-    - VERSION: "{{ lookup('env', 'VERSION')}}"
-    - ENVIRONMENT: "{{ lookup('env', 'ENVIRONMENT')}}"
     - TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION')}}"
     - TYPEORM_ENTITIES: "{{ lookup('env', 'TYPEORM_ENTITIES')}}"
     - TYPEORM_HOST: "{{ lookup('env', 'TYPEORM_HOST')}}"
