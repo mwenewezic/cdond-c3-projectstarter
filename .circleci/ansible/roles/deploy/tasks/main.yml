@@ -4,42 +4,21 @@
   - name: "copy artifact to ec2"
     become: yes
     synchronize:
-      src: ~/
-      dest: /home/ubuntu
+      src: ~/project/artifact.tar.gz
+      dest: ~/
       recursive: true
   - name: "extract artifact"
     unarchive:
       src: ~/project/artifact.tar.gz
-      dest: /home/ubuntu
-  - name: "Update packages."
-    become: true
-    apt:
-      update_cache: yes
-
-  - name: "upgrade packages."
-    become: true
-    apt:
-      upgrade: "yes"
-
-  - name: "install dependencies."
-    become: true
-    apt:
-      name: ["nodejs", "npm"]
-      state: latest
-      update_cache: yes
-
-  - name: "install pm2"
-    become: true
-    npm:
-      name: pm2
-      global: yes
-      production: yes
-      state: present
+      dest: ~/
   - name: "start server"
     become: true
-    command: pm2 start -f ./main.js
+    shell: |
+      npm install
+      pm2 stop default
+      sudo pm2 start npm -- start
     args:
-      chdir: /home/ubuntu/dist
+      chdir: ~/dist
     environment:
       ENVIRONMENT: production
       TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
