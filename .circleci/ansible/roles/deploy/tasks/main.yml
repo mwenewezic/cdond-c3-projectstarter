@@ -5,19 +5,17 @@
     become: yes
     synchronize:
       src: ~/project/artifact.tar.gz
-      dest: ~/
+      dest: /home/ubuntu
       recursive: true
   - name: "extract artifact"
     unarchive:
       src: ~/project/artifact.tar.gz
-      dest: ~/
+      dest: /home/ubuntu
   - name: "start server"
     become: true
-    shell: |
-      npm install
-      pm2 stop default
-      sudo pm2 start npm -- start
-    
+    command: pm2 start -f ./main.js
+    args:
+      chdir: /home/ubuntu/dist
     environment:
       ENVIRONMENT: production
       TYPEORM_CONNECTION: "{{ lookup('env', 'TYPEORM_CONNECTION') }}"
