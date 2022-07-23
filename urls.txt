@@ -3,11 +3,11 @@
     - https://github.com/mwenewezic/cdond-c3-projectstarter
 
 [URL02] | Public URL to S3 Bucket
-    - https://udapeople-831ece0.s3.amazonaws.com
+    - http://udapeople-25e73da.s3-website-us-west-2.amazonaws.com
 
 [URL03] | CloudFront
     - https://d4k45zfpl3y9p.cloudfront.net
 
 [URL04] | Evidence of healthy back-end application
-    - https://<Public-IP>:3030/api/status
+    - https://35.90.152.77:3030/api/status
 
