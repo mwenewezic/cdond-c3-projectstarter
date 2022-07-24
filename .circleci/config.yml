@@ -395,9 +395,9 @@ jobs:
       steps:
         - checkout
         - run:
-          name: Install dependencies
-          command: |
-            yum install -y tar gzip
+            name: Install dependencies
+            command: |
+              yum install -y tar gzip
         - add_ssh_keys:
             fingerprints: ["6c:2d:b3:3e:59:31:99:22:44:58:2f:ad:fe:34:59:6e"]
         - attach_workspace:
