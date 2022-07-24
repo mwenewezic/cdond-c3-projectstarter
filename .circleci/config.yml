@@ -397,6 +397,11 @@ jobs:
         - run:
             name: Get old stack workflow id
             command: |
+              cd .circleci/ansible
+              ls
+              echo "--------------"
+              cat oldworkflowid.txt
+              echo "--------------"
               #Fetch the Old workflow ID
               export OldWorkflowID=$(cat .circleci/ansible/oldworkflowid.txt)
               echo OldWorkflowID: "${OldWorkflowID}"
@@ -408,10 +413,12 @@ jobs:
         - run:
             name: Remove old stacks and files
             command: |
+              cd .circleci/ansible
+              ls
               echo "--------------"
-              cat .circleci/ansible/oldworkflowid.txt
+              cat oldworkflowid.txt
               echo "--------------"
-              OldWorkflowID=$(cat .circleci/ansible/oldworkflowid.txt)
+              OldWorkflowID=$(cat oldworkflowid.txt)
               echo OldWorkflowID: "${OldWorkflowID}"
               echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
               if [[ ( "${OldWorkflowID}" != "${CIRCLE_WORKFLOW_ID:0:7}" ) && ( "${OldWorkflowID}" != "" ) ]]
