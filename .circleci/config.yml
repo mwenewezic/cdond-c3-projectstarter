@@ -155,7 +155,7 @@ jobs:
             export oldwfid=$(aws cloudformation \
               list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
               --no-paginate --output text)
-            echo udapeople-${oldwfid} >> ~/project/oldworkflowid.txt
+            echo ${oldwfid} >> ~/project/oldworkflowid.txt
             cat ~/project/oldworkflowid.txt
       - run:
           name: Ensure back-end infrastructure exists
@@ -409,13 +409,13 @@ jobs:
             command: |
               OldWorkflowID=$(cat ~/project/oldworkflowid.txt)
               echo OldWorkflowID: "${OldWorkflowID}"
-              echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID}"
-              if [[ "${OldWorkflowID}" != ${CIRCLE_WORKFLOW_ID} ]]
+              echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
+              if [[ "${OldWorkflowID}" != ${CIRCLE_WORKFLOW_ID:0:7} && "${OldWorkflowID}" !="" ]]
               then
                 echo "---------Delete Confirmed---------"
-                aws s3 rm "s3://${OldWorkflowID}" --recursive
-                aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID:0:7}"
-                aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID:0:7}"
+                aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+                aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
+                aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
               else
                 echo "---------Cannot Cleanup---------"
               fi
