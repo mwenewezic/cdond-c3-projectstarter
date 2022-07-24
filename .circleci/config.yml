@@ -391,19 +391,17 @@ jobs:
 
   cleanup:
       docker:
-        - image: python:3.9.0-alpine
+        - image: amazon/aws-cli
       steps:
         - checkout
+        - run:
+          name: Install dependencies
+          command: |
+            yum install -y tar gzip
         - add_ssh_keys:
             fingerprints: ["6c:2d:b3:3e:59:31:99:22:44:58:2f:ad:fe:34:59:6e"]
         - attach_workspace:
             at: .
-        - run:
-          name: Install dependencies
-          command: |
-            apk add --update ansible curl rsync openssh nodejs npm
-            apk add --update ansible
-            pip install awscli
         - run:
             name: Get old stack workflow id
             command: |
