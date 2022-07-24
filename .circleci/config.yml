@@ -152,7 +152,7 @@ jobs:
       - run:
           name: Get old stack id
           command: |
-            export oldwfid = $(aws cloudformation \
+            export oldwfid=$(aws cloudformation \
               list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
               --no-paginate --output text)
             echo udapeople-${oldwfid} >> ~/project/oldworkflowid.txt
