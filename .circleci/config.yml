@@ -407,7 +407,7 @@ jobs:
             command: |
               cd .circleci/ansible
               ls
-              echo "---------------"
+              echo "----------------"
               cat oldworkflowid.txt
               echo "--------------"
               #Fetch the Old workflow ID
