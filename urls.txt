@@ -2,15 +2,13 @@
     - https://github.com/mwenewezic/cdond-c3-projectstarter
 
 [URL02] | Public URL to S3 Bucket
-    - http://udapeople-25e73da.s3-website-us-west-2.amazonaws.com
+    - http://udapeople-f9775b0.s3-website-us-west-2.amazonaws.com/#/employees
 
 [URL03] | CloudFront
     - https://d4k45zfpl3y9p.cloudfront.net
 
 [URL04] | Evidence of healthy back-end application
-    - http://54.201.219.194:3030/api/status
+    - http://52.35.36.254:3030/api/status
 
 [URL05] | Prometheus
-    - http://34.215.161.236:9090 or ec2-34-215-161-236.us-west-2.compute.amazonaws.com:9090
-    
-
+    - http://ec2-54-212-220-54.us-west-2.compute.amazonaws.com:9090/
